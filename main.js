@@ -22,7 +22,7 @@ function getSpaceName(){
 
             if (attemptSpace<1){
                 alert("Has hecho varios intentos fallidos, quieres registrarte o necesitas ayuda con tu espacio familiar?");
-                alert("Actualmente no hay proceso para recuperar tu Espacio, recargá y empezá de nuevo con los valores sugeridos en casa paso. Gracias!");
+                alert("Actualmente no hay proceso para recuperar tu Espacio, recargá y empezá de nuevo con los valores sugeridos en cada paso. Gracias!");
                 console.log("spaceName " + spaceName + ", spaceIdentified " + spaceIdentified);
                 console.log("ingresó mal la familia 3 veces");
                 break;
@@ -83,7 +83,7 @@ function getUser(){
 
             if (attemptUser<1){
                 alert("Has hecho varios intentos fallidos, quieres recuperar tu usuario?");
-                alert("Actualmente no hay proceso para recuperar tu usuario, recargá y empezá de nuevo con los valores sugeridos en casa paso. Gracias!");
+                alert("Actualmente no hay proceso para recuperar tu usuario, recargá y empezá de nuevo con los valores sugeridos en cada paso. Gracias!");
                 console.log("userName " + userName + ", userIdentified " + userIdentified);
                 console.log("ingresó mal el usuario 3 veces");
                 break;
@@ -169,7 +169,6 @@ function calcularPropinas(){
     return [invoiceAmount, members, totalTip, desiredTip, dividedAmount, result];
 }
 function aplicarcalcularPropinas(){
-
     let calculador; 
     do{
         calculador = calcularPropinas();
