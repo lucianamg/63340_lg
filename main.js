@@ -57,7 +57,8 @@ function login (){
     if (passw === null || passw === "" || passOk !== true){
         return
     }
-    console.log("TENEMOS "+ "Pass " + passw + ", pass ok " + passOk);
+    //console.log("TENEMOS "+ "Pass " + passw + ", pass ok " + passOk);
+    return [user, spaceName];
 }
 function getUser(){
     let userIdentified = false;
@@ -106,7 +107,6 @@ function getPass(){
         if ((pass === "pass" || pass === "Dejamentrar" || pass === "pp") && attemptPass>=1){
             console.log("ingresó bien la contraseña");  
             passOk = true;
-            alert("pass OK");//sacar esta cuendo pueda
         }else{ 
             alert("La contraseña es incorrecta ");
             attemptPass--
@@ -123,7 +123,29 @@ function getPass(){
     } while (passOk === false);
     return [pass, passOk];
 }
+function sayHello(){
+    let getFinalData = login(); // la fc login devuelve user y spacename
+    let finalSpaceName = getFinalData[1];
+    let finalUserName = getFinalData[0];
+    console.log(finalUserName + finalSpaceName);
+    alert("Bienvenido/a " +  finalUserName + " del Espacio ´" + finalSpaceName + "´! Ahora vamos a calcular unas propinas, tocá aceptar.");
+}
+function calcularPropinas(){
+    let invoiceAmmount = parseFloat(prompt ("ingresa el monto final que te aparece en la cuenta"));
+    //convertir a numero decimal
+    let desiredTip = parseFloat(prompt("ingresa -en números- un porcentaje de propina que quieres dejar, por ejemplo 5, 10, 15 o 20 porciento"));
+    //convertir a numero 
+    let divide = parseInt(prompt("ingresa -en números- cuántas personas son para dividir el pago, por ejemplo 3, 5, 10 etc")); 
+    //convertir a numero entero
+    let totalTip = invoiceAmmount*desiredTip/100;
+    let result = invoiceAmmount + totalTip;
+    let dividedAmmount = result/divide;
+    // hacer casos si pone null o "" en alguno de los tres (Nan)
+    // haceer caso si pone negativo
+    
+    alert("Para el porcentaje elegido, la propina total es de $ " + totalTip + ". Para pagar la factura de $ " + invoiceAmmount + " dividida entre " + divide + " personas, con un porcentaje de propina del " + desiredTip + " %, cada uno debe abonar $ " + dividedAmmount);
+}
+sayHello();
+calcularPropinas();
 
-login()
-alert("Bienvenido/a " +  /*user*/ + " de la casa " + /*spaceName*/ + "! ahora vamos a calcular unas propinas, tocá aceptar.");
 
