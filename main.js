@@ -124,175 +124,330 @@ function getPass(){
     } while (passOk === false);
     return [pass, passOk];
 }
-function sayHello(){
+function sayHello(){// deberia hacer hide del cuadro login y del cuadro hint, y mostrar las tareas para ese usuario y luego las demas tareas de la casa
     let getFinalData = login(); // la fc login devuelve user y spacename
     let finalSpaceName = getFinalData[1];
     let finalUserName = getFinalData[0];
     console.log(finalUserName + finalSpaceName);
     alert("Bienvenido/a " +  finalUserName + " del Espacio ´" + finalSpaceName + "´! tocá aceptar para continuar.");
-    //console.log("bonus track calculo de propinas para cuando completaste el user y pass");
 }
-function calcularPropinas(){
-    let input = prompt("ingresa el monto final que te aparece en la cuenta");
-    if (input === null || input.trim() === ""){
-        alert("Debes ingresar un monto y no puede ser menor que cero.");
-        //location.reload();
-        return
-    }
-    let invoiceAmount = parseFloat(input);
-    if (isNaN(invoiceAmount) || invoiceAmount<0){
-        alert("Debes ingresar un monto y no puede ser menor que cero.");
-        return
-    }
-    input = prompt("ingresa -en números- un porcentaje de propina que quieres dejar, por ejemplo 5, 10, 15 o 20 porciento")
-    if (input === null || input.trim() === ""){
-        alert("Debes ingresar un porcentaje de propina y debe ser mayor que cero.");
-        return
-    }
-    let desiredTip = parseFloat(input);
-    if (isNaN(desiredTip) || desiredTip<=0){
-        alert("Debes ingresar un porcentaje de propina y debe ser mayor que cero.");
-        return
-    }
-    input = prompt("ingresa -en números- cuántas personas son para dividir el pago, por ejemplo 3, 5, 10 etc");
-    if (input === null || input.trim() === ""){
-        alert("Debes ingresar un numero de personas a dividir la cuenta y debe ser mayor que cero.");
-        return
-    }
-    let members = parseInt(input)
-    if (isNaN(members) || members<=0){
-        alert("Debes ingresar un numero de personas a dividir la cuenta y debe ser mayor que cero.");
-        return
-    }
-    let totalTip = invoiceAmount*desiredTip/100;
-    let result = invoiceAmount + totalTip;
-    let dividedAmount = result/members;
-    return [invoiceAmount, members, totalTip, desiredTip, dividedAmount, result];
-}
-function aplicarcalcularPropinas(){
-    let calculador; 
-    do{
-        calculador = calcularPropinas();
-    }
-    while (calculador === null) 
-    let invoiceAmount = calculador[0] 
-    let members = calculador[1]
-    let totalTip = calculador[2] 
-    let desiredTip = calculador[3] 
-    let dividedAmount = calculador[4]
-    let result = calculador[5]
-    console.log("Monto factura ingresado $ " + invoiceAmount);
-    console.log("Porcentaje propina deseada ingresado "+desiredTip);
-    console.log("Total de propina calculado $ " + totalTip);
-    console.log("Total de factura + propina sin dividir $ " + result);
-    console.log("A dividir entre " + members);
-    console.log("Total para cada persona $ " + dividedAmount );
-    alert("Para el porcentaje elegido, la propina total es de $ " + totalTip + ". Para pagar la factura de $ " + invoiceAmount + " dividida entre " + members + " personas, con un porcentaje de propina del " + desiredTip + " %, cada uno debe abonar $ " + dividedAmount);
-    }
-
-//sayHello(); COMENTO ESTO PARA QUE NO TENGAN QUE HACER TODOS ESTOS PRIMEROS PASOS EN LAS PRUEBAS DE LA 2DA PRE-ENTREGA
-
-//aplicarcalcularPropinas() Comento esto porque era para practicar funciones
+//sayHello(); COMENTO ESTO PARA QUE NO TENGAN QUE HACER TODOS ESTOS PRIMEROS PASOS EN LAS PRUEBAS DE LA 3er PRE-ENTREGA
 
 
-// Un poco la idea: TASKS se pueden crear (admin y autorizados), editar (admin y autorizados), cambiar estado (admin y user designado), borrar (admin y autorizados)
-// Users: cada casa tiene 1 o + admin y users. Admin decide quienes hacen qué. Roles: admin puede todo, users pueden lo que admin diga (crear, editar, cambio estado, borrar, etc) 
-
-// PARA ESTA ENTREGA SUMÉ LA CREACION DE OBJETO TAREAS CON UNA FC CONSTRUCTORA, UN ARRAY DE TAREAS CREADAS, UNA FUNCION DE FILTRO, UNA FUNCION FLECHA.
-
-// Para los siguientes pasos me gustaria poder hacer bajas y modificaciones y que los cambios se guarden de alguna manera. Mas adelante darle forma de formulario a la entrada de datos. 
+//-------INICIA FUNCION NEW TASK
 let tasksCount = 0;
-function newTask(){ //todo esto deberia ser mas como un formulario
-    let title = prompt("ingresa el titulo de la tarea")
-    if (title === null || title.trim() === "" || title === "" ){
-        alert("Debes ingresar un Título.");
-        //location.reload();
-        return
-    }
-    let description = prompt("ingresa una descripcion de la tarea")
-    if (description === null || description.trim() === "" || description === "" ){
-        alert("Debes ingresar una descripcion.");
-        return
-    }
-    let dateCreated = new Date()
-    let userAssigned = prompt("ingresa el tasker") // en el futuro que pueda elegir los uduarios de entre los que hay inscriptos en la casa
-    if (userAssigned === null || userAssigned.trim() === "" || userAssigned === "" ){
-        alert("Debes ingresar un Tasker.");
-        return
-    }else{//que use la fc filtrar tasker para chequear que esos usaurios existen
+let taskList = [];
 
-    }
-    let status = prompt("ingresa el Estado, ejemplos Start, Done o WIP") //en el futuro que pueda elegir entre Ready to start / work in progress / done! 
-    if (status === null || status.trim() === "" || status === "" ){
-        alert("Debes ingresar un Estado.");
-        return
-    }
-    let deadline = prompt("ingresa la fecha de deadline como DD-MM-AA") // de momento lo escribe. Luego lo elige y Formato a mostrar en console: 3 de Enero a las 23:55 hs
-    if (deadline === null || deadline.trim() === "" || deadline === "" ){
-        alert("Debes ingresar una fecha límite.");
-        return
-    }
-    let frequency = prompt("ingresa cada cuanto tiempo se debe realizar la tarea") // de momento lo escribe.
-    if (frequency === null || frequency.trim() === "" || frequency === "" ){
-        alert("Debes ingresar una frecuencia.");
-        return
-    }
-    let newTask = new task (title,description,dateCreated,userAssigned,status,deadline,frequency) 
-    taskList.push(newTask)
-    tasksCount++;
-    console.table(taskList)
-    console.log("Numero total de tareas creadas hasta el momento: "+tasksCount)
+function newTask(){ 
+    const mainElement = document.getElementById("mainContent");
+    
+    if (document.getElementById("newTaskForm")) {  
+        return;
+    } // Verifico si ya existe un formulario activo, porque pasaba que al no completarlos y apretar crear nuevamente se creaban forms paralelos
 
-    if(tasksCount>2){
-        let askFilter = prompt("¿Quieres filtrar por Status? si / no ").toLowerCase();
-        if(askFilter === "si" || askFilter === "s"|| askFilter === "sí"){
-            statusFilter()
+    const existingMessage = document.getElementById("successMessage");
+    if (existingMessage) {
+    existingMessage.remove();
+    } // esto es para que borre el mensaje de tarea creada
+
+    let newTaskForm = document.createElement("div");
+    newTaskForm.innerHTML = `
+        <form class="newTaskForm" id="newTaskForm">
+        
+            <label for="title"></label>
+            <input type="text" id="taskTitle" name="taskTitle" placeholder="Ingresa el título de la tarea"> 
+            <span class="error" id="taskTitleError"></span>
+            
+            <label for="description"></label>
+            <textarea id="taskDescription" name="taskDescription" placeholder="Ingresa una descripción de la tarea"></textarea>
+            <span class="error" id="taskDescriptionError"></span>
+            
+            <label for="userAssigned"></label>
+            <input type="text" id="userAssigned" name="userAssigned" placeholder="Ingresa el tasker">
+            <span class="error" id="userAssignedError"></span>
+            
+            <label for="status"></label>
+            <input type="text" id="taskStatus" name="taskStatus" placeholder="Ingresa el Estado actual de la tarea (to start, WIP, done)">
+            <span class="error" id="taskStatusError"></span>
+            
+            <label for="deadline"></label>
+            <input type="text" id="taskDeadline" name="taskDeadline" placeholder="Ingresa la fecha para la cual debe terminarse la tarea">
+            <span class="error" id="taskDeadlineError"></span>
+            
+            <label for="frequency"></label>
+            <input type="text" id="taskFrequency" name="taskFrequency" placeholder="Ingresa la frecuencia de la tarea">
+            <span class="error" id="taskFrequencyError"></span>
+            
+            <button type="submit" class="taskSubmitButton">Crear Tarea</button>
+        </form>
+    `; 
+    
+    secondSection.appendChild(newTaskForm);
+    
+    const form = document.getElementById("newTaskForm");// Agrega evento al formulario
+    form.addEventListener("submit", (e) => {
+    e.preventDefault(); // Evita que se recargue la pagina
+    console.log("Formulario enviado"); // quitar
+
+    const title = document.getElementById("taskTitle").value.trim();
+    const description = document.getElementById("taskDescription").value.trim();
+    const dateCreated = new Date()
+    const userAssigned = document.getElementById("userAssigned").value.trim();
+    const status = document.getElementById("taskStatus").value.trim();
+    const deadline = document.getElementById("taskDeadline").value.trim();
+    const frequency = document.getElementById("taskFrequency").value.trim();
+
+    let hasErrors = false;
+    if (!title || title.trim() === "") {
+        document.getElementById("taskTitleError").textContent = "Debes ingresar un titulo."; 
+        hasErrors = true;
+    }else{
+            document.getElementById("taskTitleError").textcontent = "";//borro el mensaje
         }
+    if (!description || description.trim() === "") {
+        document.getElementById("taskDescriptionError").textContent = "Debes ingresar una descripción.";
+        hasErrors = true;
+    }else{
+            document.getElementById("taskDescriptionError").textcontent = "";
+    }
+    if (!userAssigned || userAssigned.trim() === "") {
+        document.getElementById("userAssignedError").textContent = "Debes ingresar un Tasker.";
+        hasErrors = true;
+    }else{
+            document.getElementById("userAssignedError").textcontent = "";
+    }
+    if (!status || status.trim() === "") {
+        document.getElementById("taskStatusError").textContent = "Debes ingresar un Estado.";
+        hasErrors = true;
+    }else{
+            document.getElementById("taskStatusError").textcontent = "";
+    }
+    if (!deadline && !frequency) {
+        document.getElementById("taskDeadlineError").textContent =
+          "Debes ingresar una fecha de finalización o una frecuencia.";
+        document.getElementById("taskFrequencyError").textContent =
+          "Debes ingresar una fecha de finalización o una frecuencia.";
+        hasErrors = true;
+      } else {
+        document.getElementById("taskDeadlineError").textContent = "";
+        document.getElementById("taskFrequencyError").textContent = "";
+      }
+      if (hasErrors) {
+      return;
+    }
+
+    let newTask = new task (title,description,dateCreated,userAssigned,status,deadline,frequency); 
+    taskList.push(newTask);
+    tasksCount++;
+    saveTasksToLS();//guardo las tareas a medida que se generan
+    displayTasks(); //voy mostrando las tareas que hay
+    console.table(taskList);
+    console.log("Numero total de tareas creadas hasta el momento: "+tasksCount);
+
+    const successMessage = document.createElement("p");
+    successMessage.textContent = "Tarea creada exitosamente.";
+    successMessage.id = "successMessage";
+    successMessage.style.color = "green"; 
+    secondSection.appendChild(successMessage);
+    //form.reset();// Limpio el formulario y errores - ver si esto afecta a localStorage
+    form.remove();//quito el form luego de completarlo y fuerzo a que presione nuevamente en NewTask
+    });
+}//-------FIN FUNCION NEW TASK
+
+function statusFilter(){
+    let input = prompt("ingresá un status para filtrar como Start, Done o WIP").toLowerCase();
+    console.log("su input fue: " +input);
+    let filterResult = taskList.filter((task) => task.taskStatus.toLowerCase().includes(input));
+    console.log("filterResult es: " +filterResult);
+    if (filterResult.length > 0) {
+        console.log("entró en el IF de filterresultlenght >0");
+        let taskTitles = filterResult.map((task) => task.taskTitle).join(", ");
+        alert("las tareas que conciden con ese estado son "+ taskTitles);
+    }else{
+        alert("no se encontraron tareas con ese estado.")
+        }
+}
+function loadTasksFromLS() {
+    const storedTasks = localStorage.getItem("taskList");
+    if (storedTasks) {
+        // Si hay tareas guardadas en localStorage, cargarlas
+        taskList = JSON.parse(storedTasks);
+        tasksCount = taskList.length;
+    } else {
+        // Si no hay tareas guardadas, cargo las tareas de prueba
+        for (let key in taskTest) {
+            taskList.push(taskTest[key]);
+        }
+        tasksCount = taskList.length;
     }
 }
+function saveTasksToLS(){
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+}
+function displayTasks() {
     
-    function statusFilter(){
-        let input = prompt("ingresá un status para filtrar como Start, Done o WIP").toLowerCase();
-        console.log("su input fue: " +input);
-        let filterResult = taskList.filter((task) => task.taskStatus.toLowerCase().includes(input));
-        console.log("filterResult es: " +filterResult);
-        if (filterResult.length > 0) {
-            console.log("entró en el IF de filterresultlenght >0");
-            let taskTitles = filterResult.map((task) => task.taskTitle).join(", ");
-            alert("las tareas que conciden con ese estado son "+ taskTitles);
-        }else{
-            alert("no se encontraron tareas con ese estado.")
-            }
-    }
+    const thirdSection = document.getElementById("thirdSection");
+    thirdSection.innerHTML = ""; // Limpia todo lo que contiene la sección
 
-    const task = function(taskTitle,taskDescription,taskDateCreated,taskUserAssigned,taskStatus,taskDeadline,taskFrequency){
-        this.taskTitle = taskTitle   // ESTRUCTURA: this.(esto es lo que aparece luego en console como titulos de la tabla) = (esto debe coincidir con los parametros de la fc)
-        this.taskDescription = taskDescription
-        this.taskDateCreated = taskDateCreated //el sistema la toma en el momento que se crea
-        this.taskUserAssigned = taskUserAssigned
-        this.taskStatus = taskStatus //FUTURO desplegable: Ready to start / work in progress / done!
-        this.taskDeadline = taskDeadline // desplegable: format 3 de Enero a las 23:55 hs
-        this.taskFrequency = taskFrequency //desplegable que pueda elegir entre every day / every week / every XX days / every month / weekdays / weekends / etc
-    }
-    //let taskTest = new task("firstTask","Something to do","03-12-2024 23:55","user assigned","ready to start","January 3, 22:00 hs","every day") //solo para probarla
-    let taskList = []
-    
-    let answerCreate = true
-    do{
-        let askCreate = prompt("¿Quieres crear una tarea? pon `si´ o `no´. Si creas dos o más tareas completas podras filtrar").toLowerCase();
-        if(askCreate === "si" || askCreate === "s" || askCreate === "sí"){
-            answerCreate = true
-            newTask()
-        }
+    const tasksContainer = document.createElement("div");
+    tasksContainer.classList.add("tasksContainer"); //Creo un div que luego contendrá las tareas
+
+    taskList.forEach((task, index) => {
+        const taskDiv = document.createElement("div");
+        taskDiv.classList.add("taskItem"); // Recorre taskList y crea un div para cada tarea
+        taskDiv.innerHTML = `
+            <h1>Tarea</h1>
+            <p><strong>Título:</strong> ${task.taskTitle}</p>
+            <p><strong>Descripción:</strong> ${task.taskDescription}</p>
+            <p><strong>Fecha Creada:</strong> ${task.taskDateCreated}</p>
+            <p><strong>Tasker:</strong> ${task.taskUserAssigned}</p>
+            <p><strong>Estado:</strong> ${task.taskStatus}</p>
+            <p><strong>Deadline:</strong> ${task.taskDeadline || "No especificado"}</p>
+            <p><strong>Frecuencia:</strong> ${task.taskFrequency || "No especificada"}</p>
+        `;
+        const buttonEditTask = document.createElement("button");
+        buttonEditTask.innerHTML = "Editar Tarea";
+        buttonEditTask.classList.add("editTaskButton");
+        buttonEditTask.addEventListener(`click`,editTask);
+
+        const buttonEraseTask = document.createElement("button");
+        buttonEraseTask.innerHTML = "Eliminar Tarea";
+        buttonEraseTask.classList.add("eraseTaskButton");
+        buttonEraseTask.addEventListener(`click`,eraseTask);
         
-        else{
-            answerCreate = false;
-            alert("cuando quieras crear una tarea nueva, recarga el sitio y pon `si´ o `s´, por el momento funciona asi");
-            break
-            }
-        
-    }
-    while(answerCreate) //esto es lo mismo que poner while (answerCreate = true)
-           
-           
-  
+        taskDiv.appendChild(buttonEditTask);
+        taskDiv.appendChild(buttonEraseTask);
+
+        tasksContainer.appendChild(taskDiv); // pongo la tarea en el contenedor de tareas
+    });
+    thirdSection.appendChild(tasksContainer); // Agrego el contenedor de tareas a thirdSection(para no limpiar los botones de 2ndsection)
+}
+
+function editTask() {
+    console.log("BOTONES EDIT Y BORRAR NO HACEN NADA TODAVIA");
+}
+function eraseTask() {
+    console.log("BOTONES EDIT Y BORRAR NO HACEN NADA TODAVIA");
+}
+const task = function(taskTitle,taskDescription,taskDateCreated,taskUserAssigned,taskStatus,taskDeadline,taskFrequency){
+    this.taskTitle = taskTitle   
+    this.taskDescription = taskDescription
+    this.taskDateCreated = taskDateCreated 
+    this.taskUserAssigned = taskUserAssigned
+    this.taskStatus = taskStatus 
+    this.taskDeadline = taskDeadline 
+    this.taskFrequency = taskFrequency 
+}
+let taskTest = {
+    task1: new task("first Task","Something to do","03-12-2024 23:55","aa","ready to start","","every day"),
+    task2: new task("second Task","Something else to do","02-01-2025 13:55","User","done","19/01/2025",""),
+    task3: new task("third Task","Something else to do","04-01-2025 13:25","Admin","WIP","29/01/2025","monthly")
+} //para que ya haya tareas en la lista y funcione el filtro sin completar.  
+
+let header = document.getElementById("header")
+let headerContent = document.createElement("div")
+headerContent.classList.add("header")
+headerContent.innerHTML = `
+    <img class="logo" src="./assets/home_task_planner_logo.png" alt="logo">
+    <h1> Administrador de Tareas del Hogar </h1>
+`;
+header.appendChild(headerContent)
+
+let mainElement = document.getElementById("mainContent")
+
+let firstSection = document.createElement("section");
+firstSection.id = "firstSection";
+firstSection.classList.add("firstSection");
+mainElement.appendChild(firstSection);
+
+let secondSection = document.createElement("section");
+secondSection.id = "secondSection";
+secondSection.classList.add("secondSection");
+mainElement.appendChild(secondSection);
+
+let thirdSection = document.createElement("section");
+thirdSection.id = "thirdSection";
+thirdSection.classList.add("thirdSection");
+mainElement.appendChild(thirdSection);
+
+let divContainer = document.createElement("div");
+divContainer.innerHTML = `
+    <form class="loginBox" action="" method="">
+        <ul>
+            <li>
+                <label for="spacename">Ingresa el nombre de tu espacio familiar</label>
+                <input type="text" id="spacename" name="spacename">
+            </li>
+            <li>
+                <label for="username">Ingresa tu Usuario</label>
+                <input type="text" id="username" name="username">
+            </li>
+            <li>
+                <label for="password">Ingresa tu Contraseña</label>
+                <input type="text" id="password" name="password">
+            </li>
+            <li class="LoginSubmit">
+                <button type="submit">Ingresar</button>
+            </li>
+        </ul>
+    </form>
+    `;
+firstSection.appendChild(divContainer);
+
+let hintContainer = document.createElement("div");
+hintContainer.innerHTML = `
+<div class="temporaryHint">
+<p>Espacio Familiar: cc o casa  </p>
+<p>Usuario: aa o User  </p>
+<p>Contraseña: pp o pass </p>
+</div>
+`;
+firstSection.appendChild(hintContainer);
+
+let buttonContainer = document.createElement("div");
+buttonContainer.classList.add("buttonContainer");
+
+let buttonFilterTask = document.createElement("button");
+buttonFilterTask.innerHTML = "Filtro de Tareas";
+buttonFilterTask.classList.add("filterTaskButton");
+buttonFilterTask.id = "filterTaskButton";
+buttonContainer.appendChild(buttonFilterTask);
+
+let buttonNewTask = document.createElement("button");
+buttonNewTask.innerHTML = "Nueva Tarea";
+buttonNewTask.classList.add("newTaskButton");
+buttonNewTask.id = "newTaskButton";
+buttonContainer.appendChild(buttonNewTask);
+
+secondSection.appendChild(buttonContainer);
+
+let footer = document.getElementById("footer")
+let footerContent = document.createElement("div")
+footerContent.classList.add("footer")
+footerContent.innerHTML = `
+    <p> Creado por Lu <p>
+`;
+footer.appendChild(footerContent)
+
+loadTasksFromLS();//esto debe ir antes de llamar a newTaskEvent.addEventListener ACA SE INICIA MI APP
+displayTasks();
+
+let newTaskEvent = document.getElementById("newTaskButton")
+newTaskEvent.addEventListener("click",newTask)
+
+let filterTaskEvent = document.getElementById("filterTaskButton")
+filterTaskEvent.addEventListener("click",statusFilter)
+
+    //Ingreso user etc y me muestra las tareas que hay asignadas a ese user, mas abajo las tareas en general con sus datos "Metas" 
+    //arriba hay botones de agregar tarea y de filtrar "Metas" DONE 
+    //en cada tarea hay boton de borrar y de modificar y de completar (al completar se pone fecha de completado y usuario) "Metas" WIP
+    // hacer bajas y modificaciones de tareas y que los cambios se guarden de alguna manera. "Metas"
+    //Darle forma de formulario a la entrada de datos login. "Metas"
+
+    //que el usuario ingrese las tareas a través de un formulario en el HTML (TUTOR) WIP - Falta al inicio (login)
+    //guardar tareas en localstorage CONSIGNA DONE
+    //usar local storage para luego mostrar las tareas guardadas CONSIGNA DONE
+    //cambiar alerts por otra cosa CONSIGNA - WIP - Falta al inicio (login)
+    //poner casi todo en el HTML desde el JS usando DOM CONSIGNA DONE
+    // poner eventos y acciones CONSIGNA DONE
+    //Usar operadores avanzados 1 y 2 CONSIGNA
