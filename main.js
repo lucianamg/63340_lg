@@ -124,13 +124,15 @@ function getPass(){
     } while (passOk === false);
     return [pass, passOk];
 }
-function sayHello(){// deberia hacer hide del cuadro login y del cuadro hint, y mostrar las tareas para ese usuario y luego las demas tareas de la casa
+function sayHello(){//  hacer hide del cuadro login y del cuadro hint cuando hay aingresado user correcto, y mostrar las tareas para ese usuario y luego las demas tareas de la casa
     let getFinalData = login(); // la fc login devuelve user y spacename
     let finalSpaceName = getFinalData[1];
     let finalUserName = getFinalData[0];
     console.log(finalUserName + finalSpaceName);
     alert("Bienvenido/a " +  finalUserName + " del Espacio ´" + finalSpaceName + "´! tocá aceptar para continuar.");
 }
+
+
 //sayHello(); COMENTO ESTO PARA QUE NO TENGAN QUE HACER TODOS ESTOS PRIMEROS PASOS EN LAS PRUEBAS DE LA 3er PRE-ENTREGA
 
 
@@ -198,12 +200,13 @@ function newTask(){
     const frequency = document.getElementById("taskFrequency").value.trim();
 
     let hasErrors = false;
-    if (!title || title.trim() === "") {
-        document.getElementById("taskTitleError").textContent = "Debes ingresar un titulo."; 
-        hasErrors = true;
-    }else{
-            document.getElementById("taskTitleError").textcontent = "";//borro el mensaje
-        }
+    
+    document.getElementById("taskTitleError").textContent = 
+    (!title || title.trim() === "") 
+        ? "Debes ingresar un título." 
+        : "";
+    hasErrors = (!title || title.trim() === "") ? true : hasErrors; //hice este unico ejemplo de operador ternario
+
     if (!description || description.trim() === "") {
         document.getElementById("taskDescriptionError").textContent = "Debes ingresar una descripción.";
         hasErrors = true;
@@ -444,10 +447,11 @@ filterTaskEvent.addEventListener("click",statusFilter)
     // hacer bajas y modificaciones de tareas y que los cambios se guarden de alguna manera. "Metas"
     //Darle forma de formulario a la entrada de datos login. "Metas"
 
-    //que el usuario ingrese las tareas a través de un formulario en el HTML (TUTOR) WIP - Falta al inicio (login)
-    //guardar tareas en localstorage CONSIGNA DONE
-    //usar local storage para luego mostrar las tareas guardadas CONSIGNA DONE
-    //cambiar alerts por otra cosa CONSIGNA - WIP - Falta al inicio (login)
-    //poner casi todo en el HTML desde el JS usando DOM CONSIGNA DONE
-    // poner eventos y acciones CONSIGNA DONE
-    //Usar operadores avanzados 1 y 2 CONSIGNA
+    //que el usuario ingrese las tareas a través de un formulario en el HTML - (TUTOR) WIP - Falta al inicio (login)
+    //guardar tareas en localstorage - CONSIGNA - DONE
+    //usar local storage para luego mostrar las tareas guardadas - CONSIGNA - DONE
+    //cambiar alerts por otra cosa  CONSIGNA - WIP - Falta solo al inicio (login)
+    //poner todo en el HTML desde el JS usando DOM - CONSIGNA - DONE
+    // poner eventos y acciones  CONSIGNA - DONE
+    //Usar operadores avanzados 1 y 2 para reemplazar IF  - CONSIGNA - WIP hice un ejemplo en los if de la validacion de formulario de crear tareas
+   
