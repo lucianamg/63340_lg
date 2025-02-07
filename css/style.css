@@ -114,10 +114,8 @@ font-family: "DM Sans", serif;
 }
 .newTaskButton{
     width: 9.3rem;
-    
     border: none; 
-    
-    padding: 14px 28px; 
+    padding: 14px 20px; 
     margin: 16px;
     cursor: pointer; 
     border-radius: 5px; 
@@ -136,7 +134,7 @@ font-family: "DM Sans", serif;
   border: none; 
   margin: 16px;
   color: white; 
-  padding: 14px 28px; 
+  padding: 14px 20px; 
   cursor: pointer; 
   border-radius: 5px; 
   background-color: #e7e7e7; color: black;
@@ -147,39 +145,46 @@ font-family: "DM Sans", serif;
 .filterTaskButton:hover {
   background: #ddd;
 }
-.editTaskButton{
+.completeTaskButton{
   width: 9.3rem;
   margin: 16px;
   border: none; 
-  color: white; 
-  padding: 14px 28px; 
+  
+  padding: 14px 20px; 
   cursor: pointer; 
   border-radius: 5px; 
-  background-color: #e7e7e7; color: black;
+  background-color: #48a85d; color: rgb(252, 248, 202);
   font-family: "League Spartan", serif;
   font-weight: 350;
   font-size: .9375rem;  
+  
 }
-.editTaskButton:hover {
-  background: #ddd;
+.completeTaskButton:hover {
+  background: #89b091;
+  color: #fefefe;
 }
+
 .eraseTaskButton{
   width: 9.3rem;
   margin: 16px;
   border: none; 
-  color: white; 
-  padding: 14px 28px; 
+   
+  padding: 14px 20px; 
   cursor: pointer; 
   border-radius: 5px; 
-  background-color: #f44141; color: black;
+  background-color: #f44141; color: rgb(252, 248, 202);
   font-family: "League Spartan", serif;
   font-weight: 350;
   font-size: .9375rem; 
 }
 .eraseTaskButton:hover {
-  background: #ddd;
+  background: #f3a4a4;
+  color: #fefefe;
 }
-
+.completedTask {
+  background-color: #ffffff;
+  color: #b7b7b7;
+}
 /* -----------------------------Footer */
 .footer{
   border-top: 1px solid #ebebeb;
@@ -193,6 +198,9 @@ font-family: "DM Sans", serif;
   padding-top: 2px;
   padding-left: .2rem;
 }
+
+
+
 
 
 /* Fuentes */
